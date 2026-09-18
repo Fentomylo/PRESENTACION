@@ -15,6 +15,8 @@ import foto3 from './RECURSOS/FOTO 3.jpg';
 import foto4 from './RECURSOS/FOTO 4.jpg';
 import foto5 from './RECURSOS/FOTO 5.jpeg';
 import foto6 from './RECURSOS/FOTO 6.jpg';
+import qrAnais from './RECURSOS/qr-anais.png';
+import qrCentroEventos from './RECURSOS/qr-centro-eventos.png';
 
 const PARTICLE_COUNT = 3000;
 
@@ -45,7 +47,7 @@ const slidesContent = [
   { slide: 10, scene: 3, align: 'left', kicker: "Composição", title: 'O <span class="hl">crescimento</span> não acontece quando uma geração substitui a outra. Acontece quando <span class="hl">trabalham juntas.</span>', footer: "" },
   { slide: 11, scene: 4, align: 'right', kicker: "Presente", title: 'Os jovens não são o futuro. São o <span class="hl">presente</span> que muitas organizações ainda não veem.', footer: "" },
   { slide: 12, scene: 4, align: 'left', kicker: "Futuro construído", title: 'O <span class="hl">futuro</span> não se herda. Ele se <span class="hl">constrói.</span>', footer: "" },
-  { slide: 13, scene: 4, align: 'center', kicker: "Continuidade", title: '', footer: "@centrodeeventosupb" }
+  { slide: 13, scene: 4, align: 'bottom-center', kicker: "Continuidade", title: '@centrodeeventosupb', footer: "" }
 ];
 
 async function main() {
@@ -142,6 +144,23 @@ async function main() {
     else document.exitFullscreen();
   });
 
+  // --- CÓDIGOS QR (solo en la diapositiva final) ---
+  // "Anaís" lleva al link del TED Talk del Fórum; "Centro de Eventos" lleva
+  // al Instagram del Centro de Eventos UPB. Cada QR es un link clicable.
+  const qrGroup = document.createElement('div');
+  qrGroup.className = 'ref-qr-group';
+  qrGroup.innerHTML = `
+    <a class="ref-qr-item" href="https://juanferfranco.github.io/ForumTEDTALK/" target="_blank" rel="noopener noreferrer">
+      <img src="${qrAnais}" alt="QR Anaís" />
+      <span class="ref-qr-label">Anaís</span>
+    </a>
+    <a class="ref-qr-item" href="https://www.instagram.com/centrodeeventosupb/" target="_blank" rel="noopener noreferrer">
+      <img src="${qrCentroEventos}" alt="QR Centro de Eventos" />
+      <span class="ref-qr-label">Centro de Eventos</span>
+    </a>
+  `;
+  document.body.append(qrGroup);
+
   const setScene = (sceneNum) => {
     params.sceneId.value = sceneNum;
     params.transitionProgress.value = 0.0;
@@ -184,7 +203,7 @@ async function main() {
   const updateSlideView = () => {
     const current = slidesContent[currentSlideIndex];
     params.slideId.value = current.slide;
-    slideContainer.classList.remove('align-left', 'align-right', 'align-center');
+    slideContainer.classList.remove('align-left', 'align-right', 'align-center', 'align-bottom-center');
     slideContainer.classList.add(`align-${current.align || 'left'}`);
     kickerEl.textContent = current.kicker || '';
     titleEl.innerHTML = current.title;
@@ -204,6 +223,7 @@ async function main() {
 
     setScene(current.scene);
     updateFormationOffset();
+    qrGroup.classList.toggle('is-visible', currentSlideIndex === slidesContent.length - 1);
   };
 
   const nextSlide = () => {

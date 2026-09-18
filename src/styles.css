@@ -84,6 +84,18 @@ canvas { display: block; width: 100%; height: 100%; position: absolute; top: 0; 
   max-width: min(900px, 92vw);
 }
 
+/* Diapositiva final: el texto ya no queda centrado sobre el círculo,
+   baja por debajo de él (deja despejado el espacio arriba para el núcleo
+   de partículas y espacio abajo para no chocar con los QR / la barra). */
+.ref-slide-text.align-bottom-center {
+  top: auto;
+  bottom: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  max-width: min(900px, 92vw);
+}
+
 #slide-kicker {
   font-family: var(--font-body);
   font-size: 13px;
@@ -169,6 +181,67 @@ canvas { display: block; width: 100%; height: 100%; position: absolute; top: 0; 
 
 .ref-bottom-nav button:hover {
   background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Códigos QR (solo diapositiva final): "Anaís" a la izquierda del círculo,
+   "Centro de Eventos" a la derecha, a la misma altura que el núcleo de
+   partículas, cada uno clicable como un link. Fondo blanco propio para
+   que el QR siga siendo legible sobre la foto. */
+.ref-qr-group {
+  position: fixed;
+  left: 48px;
+  right: 48px;
+  top: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 6;
+  opacity: 0;
+  transform: translateY(calc(-50% + 10px));
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.ref-qr-group.is-visible {
+  opacity: 1;
+  transform: translateY(-50%);
+  pointer-events: auto;
+}
+
+.ref-qr-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ref-qr-item img {
+  width: 92px;
+  height: 92px;
+  display: block;
+  background: #ffffff;
+  padding: 8px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transition: transform 0.2s ease;
+}
+
+.ref-qr-item:hover img {
+  transform: translateY(-2px) scale(1.03);
+}
+
+/* Misma tipografía "kicker" que usa el resto del mazo (mayúsculas,
+   letter-spacing amplio, cian) para las dos etiquetas de QR. */
+.ref-qr-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.85);
 }
 
 /* Panel LAB */

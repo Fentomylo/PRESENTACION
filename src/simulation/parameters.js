@@ -6,7 +6,7 @@ export function createParameters() {
     dt: uniform(1 / 60),
     timeScale: uniform(1.0),
     initialSpeed: uniform(0.35),
-    maxSpeed: uniform(6.0),
+    maxSpeed: uniform(9.0),
     boundsSize: uniform(15.0),
     particleSize: uniform(0.07),
 
@@ -22,7 +22,7 @@ export function createParameters() {
     vortexStrength: uniform(1.4),
 
     dragEnabled: uniform(1.0),
-    dragCoefficient: uniform(0.12),
+    dragCoefficient: uniform(0.2),
 
     // Uniformes para la narrativa interactiva por diapositivas
     sceneId: uniform(1.0),
